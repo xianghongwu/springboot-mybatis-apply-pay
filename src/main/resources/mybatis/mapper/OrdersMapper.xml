@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xhw.applypay.mapper.IOrderDao">
+    <resultMap id="BaseResultMap" type="com.xhw.applypay.model.Orders">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="order_num" property="orderNum" jdbcType="VARCHAR"/>
+        <result column="order_status" property="orderStatus" jdbcType="VARCHAR"/>
+        <result column="order_amount" property="orderAmount" jdbcType="VARCHAR"/>
+        <result column="paid_amount" property="paidAmount" jdbcType="VARCHAR"/>
+        <result column="product_id" property="productId" jdbcType="VARCHAR"/>
+        <result column="buy_counts" property="buyCounts" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="paid_time" property="paidTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="getOrderById" resultMap="BaseResultMap">
+          select * from orders where order_num=#{orderNum}
+  </select>
+
+    <update id="updateById" parameterType="com.xhw.applypay.model.Orders">
+        update orders
+        <set >
+            <if test="orderStatus != null" >
+                order_status = #{orderStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="orderAmount != null" >
+                order_amount = #{orderAmount,jdbcType=VARCHAR},
+            </if>
+            <if test="paidAmount != null" >
+                paid_amount = #{paidAmount,jdbcType=VARCHAR},
+            </if>
+            <if test="productId != null" >
+                product_id = #{productId,jdbcType=VARCHAR},
+            </if>
+            <if test="buyCounts != null" >
+                buy_counts = #{buyCounts,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null" >
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="paidTime != null" >
+                paid_time = #{paidTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="closeTime != null" >
+                close_time = #{closeTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="refundTime != null" >
+                refund_time = #{refundTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where order_num = #{orderNum,jdbcType=VARCHAR}
+    </update>
+</mapper>
